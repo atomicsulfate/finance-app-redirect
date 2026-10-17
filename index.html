@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Volver a FinanzApp</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 0; padding: 2rem 1.25rem; color: #1b1b1f; background: #fff; }
+      a.button { display: inline-block; margin-top: 1.5rem; padding: 0.9rem 1.4rem; border-radius: 12px; background: #1a5fb4; color: #fff; text-decoration: none; font-size: 1.1rem; }
+      @media (prefers-color-scheme: dark) { body { background: #121316; color: #e6e7ea; } a.button { background: #8ab4f8; color: #0b1b33; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Volver a FinanzApp</h1>
+      <p id="msg">Autorización recibida. Abriendo la aplicación…</p>
+      <a id="open" class="button" href="#">Abrir FinanzApp</a>
+      <p>Esta página no guarda ni envía datos: solo devuelve el resultado de la autorización a la aplicación instalada en este dispositivo.</p>
+    </main>
+    <script>
+      var SCHEME = 'io.github.atomicsulfate.financeapp';
+      var query = window.location.search;
+      var intent = 'intent://bank-callback' + query + '#Intent;scheme=' + SCHEME + ';package=' + SCHEME + ';end';
+      var custom = SCHEME + '://bank-callback' + query;
+      var isAndroid = /Android/i.test(navigator.userAgent);
+      var target = isAndroid ? intent : custom;
+      document.getElementById('open').setAttribute('href', target);
+      window.location.replace(target);
+    </script>
+  </body>
+</html>
